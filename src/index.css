@@ -1,0 +1,270 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :root {
+    /* Space Theme Colors */
+    --background: 230 35% 7%;
+    --foreground: 220 20% 95%;
+
+    --card: 230 30% 12%;
+    --card-foreground: 220 20% 95%;
+
+    --popover: 230 30% 12%;
+    --popover-foreground: 220 20% 95%;
+
+    --primary: 195 100% 50%;
+    --primary-foreground: 230 35% 7%;
+
+    --secondary: 270 80% 60%;
+    --secondary-foreground: 220 20% 95%;
+
+    --muted: 230 25% 20%;
+    --muted-foreground: 220 15% 65%;
+
+    --accent: 195 100% 50%;
+    --accent-foreground: 230 35% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 20% 95%;
+
+    --border: 230 25% 25%;
+    --input: 230 25% 20%;
+    --ring: 195 100% 50%;
+
+    --radius: 1rem;
+
+    /* Space Theme Gradients */
+    --gradient-cosmic: linear-gradient(135deg, hsl(270 80% 40%) 0%, hsl(230 60% 30%) 50%, hsl(195 100% 35%) 100%);
+    --gradient-nebula: linear-gradient(120deg, hsl(270 80% 50% / 0.3) 0%, hsl(195 100% 50% / 0.3) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(230 30% 12% / 0.6) 0%, hsl(230 30% 15% / 0.6) 100%);
+    
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(195 100% 50% / 0.3);
+    --shadow-card: 0 8px 32px hsl(230 35% 7% / 0.5);
+    
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Space Background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, hsl(230 60% 15%) 0%, hsl(230 35% 7%) 100%);
+    z-index: -2;
+  }
+
+  /* Animated Stars */
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(195 100% 50% / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(195 100% 50% / 0.6); }
+  }
+
+  /* Comet Animation */
+  @keyframes comet-fly {
+    0% {
+      transform: translateX(-200px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(calc(100vw + 200px));
+      opacity: 0;
+    }
+  }
+
+  .comet-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .comet {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: hsl(195 100% 70%);
+    border-radius: 50%;
+    box-shadow: 
+      0 0 15px hsl(195 100% 70%),
+      0 0 30px hsl(195 100% 60%),
+      0 0 45px hsl(195 100% 50%);
+    animation: comet-fly 2s ease-in-out forwards;
+  }
+
+  .comet-tail {
+    position: absolute;
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(
+      to left,
+      hsl(195 100% 70% / 0.9),
+      hsl(195 100% 60% / 0.6),
+      hsl(195 100% 50% / 0.3),
+      transparent
+    );
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    box-shadow: 0 0 15px hsl(195 100% 60% / 0.6);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: hsl(230 30% 12% / 0.4);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(230 25% 25% / 0.3);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px hsl(195 100% 50% / 0.5);
+  }
+
+  .hover-glow {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(30px, -30px) scale(1.1);
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+      transform: translate(40px, 10px) scale(1.05);
+    }
+  }
+
+  /* Starfield Animation */
+  .stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -10;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  }
+
+  .stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+    animation: animStar 50s linear infinite;
+  }
+  
+  .stars:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+  }
+  
+  .stars2 {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+    animation: animStar 100s linear infinite;
+  }
+  
+  .stars2:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+  }
+  
+  .stars3 {
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+    animation: animStar 150s linear infinite;
+  }
+  
+  .stars3:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+  }
+  
+  @keyframes animStar {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-2000px);
+    }
+  }
+}

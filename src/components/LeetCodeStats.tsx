@@ -1,19 +1,60 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { Rocket, Trophy, Target, Flame, Quote } from "lucide-react";
 
 const LeetCodeStats = () => {
-  // Mock data - you can update these values manually or fetch them if you have an API
-  const stats = {
-    solved: 145,
+  const [stats, setStats] = useState({
+    solved: 0,
     total: 500, // Your goal
-    easy: 80,
-    medium: 50,
-    hard: 15,
-    streak: 12
-  };
+    easy: 0,
+    medium: 0,
+    hard: 0,
+    streak: 0,
+    isLoading: true
+  });
+
+  // TODO: Replace with your actual LeetCode username
+  const username = "ZGevYVsJez"; 
+
+  useEffect(() => {
+    const fetchLeetCodeStats = async () => {
+      try {
+        const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+        const data = await response.json();
+        
+        if (data.status === "success") {
+          setStats({
+            solved: data.totalSolved,
+            total: 500, // You can adjust this goal
+            easy: data.easySolved,
+            medium: data.mediumSolved,
+            hard: data.hardSolved,
+            streak: 0, // API doesn't provide streak, defaulting to 0 or you can hardcode/fetch elsewhere
+            isLoading: false
+          });
+        } else {
+          console.error("Failed to fetch LeetCode stats:", data.message);
+          setStats(prev => ({ ...prev, isLoading: false }));
+        }
+      } catch (error) {
+        console.error("Error fetching LeetCode stats:", error);
+        setStats(prev => ({ ...prev, isLoading: false }));
+      }
+    };
+
+    fetchLeetCodeStats();
+  }, []);
 
   const progressPercentage = Math.min((stats.solved / stats.total) * 100, 100);
+
+  if (stats.isLoading) {
+    return (
+      <div className="w-full max-w-4xl mx-auto p-6 flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   const quotes = [
     "Code is like humor. When you have to explain it, it’s bad. – Cory House",
@@ -129,17 +170,6 @@ const LeetCodeStats = () => {
                 <div className="text-2xl font-bold text-red-400">{stats.hard}</div>
               </div>
             </motion.div>
-          </div>
-
-          <div className="text-center">
-            <a 
-              href="https://leetcode.com/progress/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors text-sm uppercase tracking-widest font-bold border-b border-primary/30 hover:border-primary pb-1"
-            >
-              View Full Profile <Trophy className="w-4 h-4" />
-            </a>
           </div>
         </div>
       </motion.div>

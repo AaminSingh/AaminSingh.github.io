@@ -107,7 +107,7 @@ body {
     transform: translate(-120%, -50%);
     z-index: 3;
     pointer-events: none;
-    width: clamp(460px, 62vw, 900px);
+    width: clamp(360px, 62vw, 800px);
 }
 
 .hero-car {

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills – Aamin's Portfolio</title>
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio.css">
+    <style>
+        body { margin: 0; background: #080808; }
+
+        .skills-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 24px 0;
+        }
+        .skills-hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 5.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #4ade80, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        .skills-hero p {
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        /* Horizontal scroll container */
+        .h-scroll-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 650px;
+            margin-top: 60px;
+        }
+        .h-scroll-track {
+            display: flex;
+            gap: 24px;
+            padding: 60px 80px;
+            will-change: transform;
+            width: max-content;
+        }
+
+        /* Background blobs (move slower for parallax) */
+        .parallax-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+        }
+        .blob-1 { width: 300px; height: 300px; background: #4ade80; top: 10%; left: 10%; }
+        .blob-2 { width: 260px; height: 260px; background: #22d3ee; top: 30%; left: 50%; }
+        .blob-3 { width: 200px; height: 200px; background: #a78bfa; bottom: 10%; left: 70%; }
+
+        /* Skill cards */
+        .skill-card {
+            flex-shrink: 0;
+            width: 220px;
+            padding: 32px 24px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 14px;
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
+                        border-color 0.3s, box-shadow 0.3s;
+            cursor: default;
+            position: relative;
+            z-index: 1;
+        }
+        .skill-card:hover {
+            transform: translateY(-12px) scale(1.04);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .skill-icon {
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+        .skill-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .skill-level {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--accent);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 1s cubic-bezier(0.34,1.56,0.64,1) 0.3s;
+        }
+        .skill-card.in-view .skill-fill { transform: scaleX(1); }
+        .skill-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: rgba(255,255,255,0.06);
+            color: #aaa;
+            letter-spacing: 0.5px;
+        }
+
+        /* Scroll indicator */
+        .scroll-cta {
+            text-align: center;
+            padding: 24px;
+            font-family: 'Inter', sans-serif;
+            color: #444;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body class="page-wrapper">
+    <a class="go-back-btn" href="index.html">&#8592; Back</a>
+
+    <section class="skills-hero">
+        <h1>My Skill Stack</h1>
+        <p>Scroll horizontally to explore what I work with</p>
+    </section>
+
+    <div class="h-scroll-wrapper" id="hScrollWrapper">
+        <div class="parallax-bg" id="parallaxBg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+        <div class="h-scroll-track" id="skillsTrack">
+
+            <div class="skill-card" style="--accent:#f39c12">
+                <div class="skill-icon">☕</div>
+                <div class="skill-name">Java</div>
+                <div class="skill-level"><div class="skill-fill" style="width:90%"></div></div>
+                <div class="skill-tag">Primary Language</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#4ade80">
+                <div class="skill-icon">🧩</div>
+                <div class="skill-name">Data Structures</div>
+                <div class="skill-level"><div class="skill-fill" style="width:85%"></div></div>
+                <div class="skill-tag">Daily Practice</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#f7df1e">
+                <div class="skill-icon">🔢</div>
+                <div class="skill-name">Algorithms</div>
+                <div class="skill-level"><div class="skill-fill" style="width:82%"></div></div>
+                <div class="skill-tag">LeetCode Streak</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#e44d26">
+                <div class="skill-icon">🌐</div>
+                <div class="skill-name">HTML / CSS</div>
+                <div class="skill-level"><div class="skill-fill" style="width:92%"></div></div>
+                <div class="skill-tag">Front-End</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#f7df1e">
+                <div class="skill-icon">⚡</div>
+                <div class="skill-name">JavaScript</div>
+                <div class="skill-level"><div class="skill-fill" style="width:88%"></div></div>
+                <div class="skill-tag">Full-Stack</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#61dafb">
+                <div class="skill-icon">⚛️</div>
+                <div class="skill-name">React</div>
+                <div class="skill-level"><div class="skill-fill" style="width:78%"></div></div>
+                <div class="skill-tag">UI Framework</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#68a063">
+                <div class="skill-icon">🟢</div>
+                <div class="skill-name">Node.js</div>
+                <div class="skill-level"><div class="skill-fill" style="width:75%"></div></div>
+                <div class="skill-tag">Back-End</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#3776ab">
+                <div class="skill-icon">🐍</div>
+                <div class="skill-name">Python</div>
+                <div class="skill-level"><div class="skill-fill" style="width:70%"></div></div>
+                <div class="skill-tag">AI / ML</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#ff6f00">
+                <div class="skill-icon">🤖</div>
+                <div class="skill-name">Machine Learning</div>
+                <div class="skill-level"><div class="skill-fill" style="width:65%"></div></div>
+                <div class="skill-tag">Concepts + Projects</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#a78bfa">
+                <div class="skill-icon">🗄️</div>
+                <div class="skill-name">SQL / NoSQL</div>
+                <div class="skill-level"><div class="skill-fill" style="width:72%"></div></div>
+                <div class="skill-tag">Databases</div>
+            </div>
+
+            <div class="skill-card" style="--accent:#22d3ee">
+                <div class="skill-icon">🐋</div>
+                <div class="skill-name">Docker / Git</div>
+                <div class="skill-level"><div class="skill-fill" style="width:68%"></div></div>
+                <div class="skill-tag">DevOps Basics</div>
+            </div>
+
+        </div>
+    </div>
+    <p class="scroll-cta">← Scroll to explore →</p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const track = document.getElementById("skillsTrack");
+        const bg    = document.getElementById("parallaxBg");
+
+        const totalScroll = track.scrollWidth - window.innerWidth + 160;
+
+        // Main horizontal scroll (foreground moves 100%)
+        gsap.to(track, {
+            x: -totalScroll,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#hScrollWrapper",
+                start: "top top",
+                end: () => "+=" + (totalScroll * 1.2),
+                scrub: 1.2,
+                pin: true,
+                anticipatePin: 1,
+            }
+        });
+
+        // Parallax bg blobs move at ~40% speed (different speed = parallax depth)
+        gsap.to(bg, {
+            x: -(totalScroll * 0.4),
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#hScrollWrapper",
+                start: "top top",
+                end: () => "+=" + (totalScroll * 1.2),
+                scrub: 2,
+            }
+        });
+
+        // Animate skill bars when cards enter view
+        document.querySelectorAll(".skill-card").forEach(card => {
+            card.classList.add("in-view"); // simple: just trigger all on load
+        });
+
+        // Entrance animation for cards
+        gsap.fromTo(".skill-card",
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, stagger: 0.07, duration: 0.6, ease: "power2.out",
+              delay: 0.4 }
+        );
+    </script>
+</body>
+</html>

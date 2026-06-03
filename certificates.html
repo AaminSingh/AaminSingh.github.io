@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificates – Aamin's Portfolio</title>
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio.css">
+    <style>
+        body { margin: 0; background: #080610; }
+
+        .certs-hero {
+            padding: 100px 24px 60px;
+            text-align: center;
+        }
+        .certs-hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24, #fde68a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        .certs-hero p {
+            color: #555;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        /* ── STACK CARDS ────────────────────────────── */
+        /*
+         * GSAP Stack Card Math:
+         * Each card starts below the viewport (y = 100vh).
+         * As the user scrolls into the card's trigger zone:
+         *   1. Card slides up to y = 0 (its "natural" position)
+         *   2. The PREVIOUS card has already been pinned in the center
+         *   3. Subsequent cards slide on TOP with a slight scale so you
+         *      can see the previous one peeking from behind (the "stack" illusion).
+         * Each card is pinned for a set scroll distance before the next one takes over.
+         */
+        .stack-container {
+            position: relative;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px 200px;
+        }
+
+        .cert-card {
+            position: sticky;
+            top: 15vh;
+            height: 360px;
+            border-radius: 28px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 36px;
+            gap: 14px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        .cert-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.12), transparent 65%);
+        }
+
+        /* Individual card colors */
+        .cert-card:nth-child(1) { background: linear-gradient(145deg, #1e1b4b, #312e81); z-index: 1; }
+        .cert-card:nth-child(2) { background: linear-gradient(145deg, #0c4a6e, #075985); z-index: 2; }
+        .cert-card:nth-child(3) { background: linear-gradient(145deg, #14532d, #166534); z-index: 3; }
+        .cert-card:nth-child(4) { background: linear-gradient(145deg, #4c1d95, #5b21b6); z-index: 4; }
+        .cert-card:nth-child(5) { background: linear-gradient(145deg, #e78a0f, #9a3412); z-index: 5; }
+
+        .cert-issuer {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.55);
+        }
+        .cert-icon { font-size: 3.2rem; line-height: 1; }
+        .cert-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.3;
+        }
+        .cert-year {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 100px;
+            background: rgba(255,255,255,0.12);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+        }
+
+        /* Scroll progress indicator */
+        .scroll-progress {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 50;
+        }
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            transition: background 0.3s, transform 0.3s;
+        }
+        .progress-dot.active {
+            background: #fbbf24;
+            transform: scale(1.35);
+        }
+    </style>
+</head>
+<body class="page-wrapper">
+    <a class="go-back-btn" href="index.html">&#8592; Back</a>
+
+    <section class="certs-hero">
+        <h1>Certificates</h1>
+        <p>Scroll to stack through my achievements</p>
+    </section>
+
+    <div class="stack-container" id="stackContainer">
+
+        <a href="https://courses.ibmmooc.skillsnetwork.site/certificates/6f70b18a5eec4b9c95fd6fe4b23564f0" target="_blank" rel="noopener noreferrer" style="display:contents;text-decoration:none;">
+        <div class="cert-card" data-index="0">
+            <div class="cert-issuer">IBM SkillsBuild</div>
+            <div class="cert-icon">🤖</div>
+            <div class="cert-title">Virtual Internship – Generative AI</div>
+            <div class="cert-year">2026</div>
+        </div>
+        </a>
+
+        <a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=B93C36CB5B7DE59BB7CAA3EE6726114A09FF28B6CCFFA348406E1CD042FCED92" target="_blank" rel="noopener noreferrer" style="display:contents;text-decoration:none;">
+        <div class="cert-card" data-index="1">
+            <div class="cert-issuer">Oracle</div>
+            <div class="cert-icon">☁️</div>
+            <div class="cert-title">Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</div>
+            <div class="cert-year">2025</div>
+        </div>
+        </a>
+
+        <a href="https://courses.cognitiveclass.ai/certificates/1449fafd3cb34a80862e6c3f9e8276d8" target="_blank" rel="noopener noreferrer" style="display:contents;text-decoration:none;">
+        <div class="cert-card" data-index="2">
+            <div class="cert-issuer">IBM Cognitive Class</div>
+            <div class="cert-icon">📊</div>
+            <div class="cert-title">Data Visualization with Python</div>
+            <div class="cert-year">2024</div>
+        </div>
+        </a>
+
+        <a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_sepFgWt7CbFzbFW2w_1773464748866_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" style="display:contents;text-decoration:none;">
+        <div class="cert-card" data-index="3">
+            <div class="cert-issuer">Forage</div>
+            <div class="cert-icon">📈</div>
+            <div class="cert-title">Data Analytics Job Simulation</div>
+            <div class="cert-year">2024</div>
+        </div>
+        </a>
+        <a href="https://www.credly.com/badges/577f3f6a-4494-47b5-8431-e379cc4ee412/linked_in_profile" target="_blank" rel="noopener noreferrer" style="display:contents;text-decoration:none;">
+
+        <div class="cert-card" data-index="4">
+            <div class="cert-issuer">NPTEL · IIT</div>
+            <div class="cert-icon">🎰</div>
+            <div class="cert-title">Build IoT apps with Watson AI</div>
+            <div class="cert-year">2024</div>
+        </div>
+</a>
+    </div>
+
+    <div class="scroll-progress" id="progressDots"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const cards = gsap.utils.toArray(".cert-card");
+        const progressContainer = document.getElementById("progressDots");
+
+        // Build progress dots
+        cards.forEach((_, i) => {
+            const dot = document.createElement("div");
+            dot.className = "progress-dot" + (i === 0 ? " active" : "");
+            dot.dataset.index = i;
+            progressContainer.appendChild(dot);
+        });
+        const dots = document.querySelectorAll(".progress-dot");
+
+        function setActiveDot(index) {
+            dots.forEach((d, i) => d.classList.toggle("active", i === index));
+        }
+
+        /* ── GSAP Stack Cards logic ──────────────────────
+         * Each card is `position: sticky`, so the browser already
+         * handles the stacking order as the user scrolls.
+         *
+         * What GSAP adds on top:
+         * 1. Cards enter with a slide-up from below (y: 80 → 0)
+         * 2. Cards scale down slightly as they get "buried" by later cards
+         * 3. Progress dots update based on which card is dominant
+         */
+        cards.forEach((card, i) => {
+            // Entrance: slide up from below
+            gsap.fromTo(card,
+                { y: 80, opacity: 0, scale: 0.94 },
+                {
+                    y: 0, opacity: 1, scale: 1,
+                    duration: 0.7, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 90%",
+                        toggleActions: "play none none reverse",
+                    }
+                }
+            );
+
+            // Active dot tracker
+            ScrollTrigger.create({
+                trigger: card,
+                start: "top 50%",
+                end: "bottom 50%",
+                onEnter:      () => setActiveDot(i),
+                onEnterBack:  () => setActiveDot(i),
+            });
+
+            // When a later card slides over: subtly scale & dim the earlier ones
+            if (i < cards.length - 1) {
+                gsap.to(card, {
+                    scale: 0.96,
+                    filter: "brightness(0.75)",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: cards[i + 1],
+                        start: "top 80%",
+                        end: "top 20%",
+                        scrub: true,
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

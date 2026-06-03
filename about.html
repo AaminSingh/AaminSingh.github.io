@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me – Aamin's Portfolio</title>
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio.css">
+    <style>
+        body { margin: 0; background: #0a0a0a; }
+
+        .about-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px 60px;
+        }
+
+        .terminal-window {
+            width: 100%;
+            max-width: 760px;
+            background: #0d1117;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,222,128,0.1);
+            overflow: hidden;
+        }
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px;
+            background: #161b22;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .t-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+        }
+        .t-dot.red   { background: #ff5f56; }
+        .t-dot.amber { background: #ffbd2e; }
+        .t-dot.green { background: #27c93f; }
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #555;
+        }
+        .terminal-body {
+            padding: 28px 28px 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(0.82rem, 1.4vw, 1rem);
+            line-height: 1.9;
+            color: #c9d1d9;
+            min-height: 340px;
+        }
+        .t-prompt { color: #4ade80; }
+        .t-output { display: block; }
+        .t-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.15em;
+            background: #4ade80;
+            vertical-align: text-bottom;
+            animation: blink 0.85s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+        .t-field  { color: #58a6ff; }
+        .t-value  { color: #e6edf3; }
+        .t-tag    { color: #a78bfa; }
+        .t-accent { color: #4ade80; }
+        .t-comment { color: #555; }
+
+        /* Facts section */
+        .facts-grid {
+            width: 100%;
+            max-width: 760px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .fact-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 20px 18px;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s;
+        }
+        .fact-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            border-color: rgba(74,222,128,0.3);
+        }
+        .fact-icon  { font-size: 1.8rem; margin-bottom: 8px; }
+        .fact-label { color: #aaa; font-size: 0.78rem; font-family: 'Inter',sans-serif; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+        .fact-value { color: #fff; font-family: 'Inter',sans-serif; font-size: 0.95rem; font-weight: 600; }
+    </style>
+</head>
+<body class="page-wrapper">
+    <a class="go-back-btn" href="index.html">&#8592; Back</a>
+
+    <section class="about-hero">
+        <div class="terminal-window">
+            <div class="terminal-bar">
+                <div class="t-dot red"></div>
+                <div class="t-dot amber"></div>
+                <div class="t-dot green"></div>
+                <div class="terminal-title">aamin@portfolio ~ about.sh</div>
+            </div>
+            <div class="terminal-body" id="termBody">
+                <span class="t-prompt">$ </span><span id="typeTarget"></span><span class="t-cursor" id="cursor"></span>
+            </div>
+        </div>
+
+        <div class="facts-grid">
+            <div class="fact-card">
+                <div class="fact-icon">🎓</div>
+                <div class="fact-label">Semester</div>
+                <div class="fact-value">6th – B.Tech CSE</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🌐</div>
+                <div class="fact-label">Passion</div>
+                <div class="fact-value">Full-Stack Dev</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🤖</div>
+                <div class="fact-label">Interest</div>
+                <div class="fact-value">AI / ML</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">☕</div>
+                <div class="fact-label">Language</div>
+                <div class="fact-value">Java & JavaScript</div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script>
+        gsap.registerPlugin(TextPlugin);
+
+        const lines = [
+            { prompt: "$ cat about.txt", delay: 0.3 },
+            { output: "" },
+            { output: '<span class="t-tag">// Hello, World!</span>' },
+            { output: '<span class="t-field">Name     :</span> <span class="t-value">Aamin Simmi Singh</span>' },
+            { output: '<span class="t-field">Degree   :</span> <span class="t-value">B.Tech CSE · 6th Semester</span>' },
+            { output: '<span class="t-field">Location :</span> <span class="t-value">India 🇮🇳</span>' },
+            { output: "" },
+            { output: '<span class="t-tag">// What I do</span>' },
+            { output: '<span class="t-accent">▸</span> Build full-stack web applications with real impact' },
+            { output: '<span class="t-accent">▸</span> Explore AI/ML — from concepts to deployable models' },
+            { output: '<span class="t-accent">▸</span> Solve DSA problems daily in Java (LeetCode 🔥)' },
+            { output: "" },
+            {output : '<span class="t-tag">// Skills</span>' },
+            { output: '<span class="t-accent">▸</span> Proficient in Java, JavaScript, Python' },
+            { output: '<span class="t-accent">▸</span> Experienced with React, Node.js, Express' },
+            { output: '<span class="t-accent">▸</span> Familiar with pandas,numpy,matplotlib,scikit-learn and libraries' },
+            {output: '<span class="t-accent">▸</span> Version control with Git & GitHub' },
+            { output: "" },
+
+            {output: '<span class="t-tag">//Hackathon Streak</span>'},
+            {output: '<span class="t-accent">▸</span> SIH 2024: Museum Ticketing System '},
+            {output: '<span class="t-accent">▸</span> TechKriti, IIT Kanpur: AI Financial Reporting (PRAMAAN) '},
+            {output: '<span class="t-accent">▸</span> ISRO Hackathon: Hyperlocal AQI Forecasting (Vaayu Darshak) '},  
+            {output: '<span class="t-accent">▸</span>  SIH 2025: Student Mental Health Platform (MANOBAL)  '},
+            { output: "" },
+
+            {output: '<span class="t-tag">//INNOVATION LOG</span>'},
+            {output: '<span class="t-accent">▸</span>KAVACH: Voice-activated womens safety system '},
+            {output: '<span class="t-accent">▸</span>VisionMeter: AI-powered eye screening tool  '},
+            {output: '<span class="t-accent">▸</span>Practice Growth Engine: Dental Clinic Management '},
+            { output: "" },
+            
+
+            { output: '<span class="t-tag">// Mission</span>' },
+            { output: '<span class="t-accent">"Driven by curiosity & purpose — I build tools that matter."</span>' },
+            { output: "" },
+            { prompt: "$ _" },
+        ];
+
+        const body = document.getElementById("termBody");
+        const typeTarget = document.getElementById("typeTarget");
+        const cursor = document.getElementById("cursor");
+
+        let html = "";
+        let delay = 0.5;
+
+        function typeChar(text, el, onDone) {
+            let i = 0;
+            const interval = 38;
+            function next() {
+                el.innerHTML = text.slice(0, ++i);
+                if (i < text.length) setTimeout(next, interval);
+                else onDone();
+            }
+            next();
+        }
+
+        function renderLines() {
+            let currentDelay = 0.5;
+
+            lines.forEach((line, idx) => {
+                if (line.output !== undefined) {
+                    const span = document.createElement("span");
+                    span.className = "t-output";
+                    span.style.opacity = "0";
+                    body.insertBefore(span, cursor);
+
+                    setTimeout(() => {
+                        span.style.opacity = "1";
+                        // We set innerHTML immediately but the GSAP Scramble/Text effect 
+                        // would be better, but we'll stick to a robust character-by-character
+                        // injection that handles HTML gracefully.
+                        
+                        let i = 0;
+                        const fullText = line.output || "&nbsp;";
+                        
+                        // If it's empty or just a space, just show it
+                        if (fullText === "&nbsp;" || fullText === "") {
+                            span.innerHTML = fullText;
+                            return;
+                        }
+
+                        // For the typewriter effect on output lines, we can't easily 
+                        // type "through" <span> tags, so we'll use a trick:
+                        // Make the text invisible and reveal it. 
+                        // But to match your prompt exactly, let's just use the typing 
+                        // logic but skip the HTML tag splitting for now to avoid the "raw code" look.
+                        
+                        // We'll treat the whole string as the target.
+                        // To avoid the tag issue, we'll set the HTML and then animate its width or use a clip-path.
+                        span.style.width = "0";
+                        span.style.overflow = "hidden";
+                        span.style.whiteSpace = "nowrap";
+                        span.style.display = "block";
+                        span.innerHTML = fullText;
+
+                        // Animate width to simulate typing
+                        gsap.to(span, {
+                            width: "auto",
+                            duration: fullText.length * 0.03, // speed per char
+                            ease: "none",
+                        });
+                    }, currentDelay * 1000);
+
+                    // Add delay based on length of text
+                    const charCount = (line.output || "").replace(/<[^>]*>/g, "").length;
+                    currentDelay += (charCount * 0.03) + 0.15;
+                    
+                } else if (line.prompt) {
+                    const promptLine = document.createElement("span");
+                    promptLine.className = "t-output";
+                    promptLine.style.opacity = "0";
+                    promptLine.innerHTML = '<span class="t-prompt">$ </span>';
+                    const contentSpan = document.createElement("span");
+                    promptLine.appendChild(contentSpan);
+                    body.insertBefore(promptLine, cursor);
+
+                    setTimeout(() => {
+                        promptLine.style.opacity = "1";
+                        if (line.prompt !== "$ _") {
+                            typeChar(line.prompt.replace("$ ", ""), contentSpan, () => {});
+                        }
+                    }, currentDelay * 1000);
+
+                    currentDelay += 0.8;
+                }
+            });
+        }
+
+        window.addEventListener("load", renderLines);
+    </script>
+</body>
+</html>
